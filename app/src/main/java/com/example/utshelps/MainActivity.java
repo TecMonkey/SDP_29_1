@@ -1,6 +1,9 @@
 package com.example.utshelps;
 
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
+    private FragmentManager mFragmentManager;
 
     public static final String TAG = "UTS";
 
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
+        mFragmentManager = getSupportFragmentManager();
+
         setupDrawerOptions(mNavigationView);
     }
 
@@ -49,13 +55,24 @@ public class MainActivity extends AppCompatActivity {
     private void selectNavigationItem(MenuItem menuItem) {
         menuItem.setChecked(true);
 
+        Fragment selectedFragment = null;
+
         switch (menuItem.getItemId()) {
             case R.id.menu_drawer_view_item1:
+                selectedFragment = new MainFragment();
                 Log.d(TAG, "Item 1 selected");
                 break;
             case R.id.menu_drawer_view_item2:
                 Log.d(TAG, "Item 2 selected");
                 break;
+        }
+
+        if (selectedFragment != null) {
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.drawer_content, selectedFragment);
+            fragmentTransaction.addToBackStack(null);
+
+            fragmentTransaction.commit();
         }
         mDrawerLayout.closeDrawers();
     }
