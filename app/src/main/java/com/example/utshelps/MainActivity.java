@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Item 1 selected");
                 break;
             case R.id.menu_drawer_view_item2:
+                selectedFragment = new FragmentTwo();
                 Log.d(TAG, "Item 2 selected");
                 break;
         }
