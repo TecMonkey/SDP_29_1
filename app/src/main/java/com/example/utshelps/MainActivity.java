@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    public static final String TAG = "UTS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +26,38 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+
+        setupDrawerOptions(mNavigationView);
+    }
+
+    private void setupDrawerOptions(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                selectNavigationItem(item);
+                return true;
+            }
+        });
+    }
+
+    private void selectNavigationItem(MenuItem menuItem) {
+        menuItem.setChecked(true);
+
+        switch (menuItem.getItemId()) {
+            case R.id.menu_drawer_view_item1:
+                Log.d(TAG, "Item 1 selected");
+                break;
+            case R.id.menu_drawer_view_item2:
+                Log.d(TAG, "Item 2 selected");
+                break;
+        }
+        mDrawerLayout.closeDrawers();
     }
 
     @Override
@@ -41,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
     }
 
 }
