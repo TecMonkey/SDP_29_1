@@ -11,4 +11,7 @@
     <string name="student_id">Student ID</string>
     <string name="password">Password</string>
     <string name="sign_in">SIGN IN</string>
+    <string name="error_student_id_numbers">A ID needs to be 8 numbers</string>
+    <string name="error_password_six_characters">Password must be 6 characters or more</string>
+    <string name="error_password_twenty_characters">Password must be 20 characters or less</string>
 </resources>
