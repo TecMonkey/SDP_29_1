@@ -7,4 +7,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="the_first_fragment_is_working">The first fragment is working!</string>
     <string name="the_second_fragment_is_working_too">The second fragment is working too</string>
+    <string name="login">LOGIN</string>
+    <string name="student_id">Student ID</string>
+    <string name="password">Password</string>
+    <string name="sign_in">SIGN IN</string>
 </resources>

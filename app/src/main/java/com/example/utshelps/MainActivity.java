@@ -1,5 +1,6 @@
 package com.example.utshelps;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
 
     public static final String TAG = "UTS";
+
+    private int fragmentCode = Constants.FRAGMENT_MAIN_DISPLAYED;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,26 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
 
         setupDrawerOptions(mNavigationView);
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        String loginResult;
+        if (resultCode == Constants.LOGIN_ACTIVITY_SUCCESS) {
+            loginResult = "Login successful";
+            Log.d(TAG, "login successful");
+            if (fragmentCode == Constants.FRAGMENT_MAIN_DISPLAYED) {
+                TextView loginView = (TextView) findViewById(R.id.fragment_main_login_text_view);
+                loginView.setText(loginResult);
+            }
+        } else if (resultCode == Constants.LOGIN_ACTIVITY_FAILED) {
+            loginResult = "Login failed";
+            Log.d(TAG, "login failed");
+        }
     }
 
     private void setupDrawerOptions(NavigationView navigationView) {
@@ -60,10 +84,12 @@ public class MainActivity extends AppCompatActivity {
         switch (menuItem.getItemId()) {
             case R.id.menu_drawer_view_item1:
                 selectedFragment = new MainFragment();
+                fragmentCode = Constants.FRAGMENT_MAIN_DISPLAYED;
                 Log.d(TAG, "Item 1 selected");
                 break;
             case R.id.menu_drawer_view_item2:
                 selectedFragment = new FragmentTwo();
+                fragmentCode = Constants.FRAGMENT_TWO_DISPLAYED;
                 Log.d(TAG, "Item 2 selected");
                 break;
         }

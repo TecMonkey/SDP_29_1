@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin">
 
     <TextView
+        android:id="@+id/fragment_main_login_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/the_first_fragment_is_working"
