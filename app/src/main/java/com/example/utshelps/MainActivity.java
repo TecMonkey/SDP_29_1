@@ -15,6 +15,22 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.utshelps.model.Workshop;
+import com.example.utshelps.model.WorkshopResponse;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
@@ -49,6 +65,47 @@ public class MainActivity extends AppCompatActivity {
 
         //Intent intent = new Intent(this, LoginActivity.class);
         //startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("http://utshelps9213.cloudapp.net/api/")
+                .client(client)
+                .build();
+
+        UtsHelpsService utsHelpsService = retrofit.create(UtsHelpsService.class);
+
+        Callback<WorkshopResponse> callback = new Callback<WorkshopResponse>() {
+            @Override
+            public void onResponse(Call<WorkshopResponse> call, Response<WorkshopResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "response was successful");
+                    if (response.body().isSuccess()) {
+                        ArrayList<Workshop> workshops = new ArrayList<>(response.body().getWorkshopList());
+                        if (workshops.size() > 0) {
+                            Workshop w1 = workshops.get(0);
+                            Log.d(TAG, "w1 id: " + w1.getId());
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "no response from server");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WorkshopResponse> call, Throwable t) {
+                Log.d(TAG, "no internet connectivity");
+            }
+        };
+
+        Call<WorkshopResponse> call = utsHelpsService.getWorkshops();
+        call.enqueue(callback);
     }
 
     private void displayFirstFragment() {
