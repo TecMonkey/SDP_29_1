@@ -45,8 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
         setupDrawerOptions(mNavigationView);
 
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
+        displayFirstFragment();
+
+        //Intent intent = new Intent(this, LoginActivity.class);
+        //startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
+    }
+
+    private void displayFirstFragment() {
+        Fragment fragment = new MainFragment();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.drawer_content, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -94,13 +103,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        if (selectedFragment != null) {
-            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.drawer_content, selectedFragment);
-            fragmentTransaction.addToBackStack(null);
+        displayFragment(selectedFragment);
+        mDrawerLayout.closeDrawers();
+    }
 
-            fragmentTransaction.commit();
-        }
+    private void displayFragment(Fragment fragment) {
+        if (fragment == null) return;
+
+        mFragmentManager.popBackStackImmediate();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.drawer_content, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
         mDrawerLayout.closeDrawers();
     }
 
