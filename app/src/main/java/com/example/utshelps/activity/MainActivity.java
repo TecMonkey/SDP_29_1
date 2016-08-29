@@ -20,7 +20,7 @@ import com.example.utshelps.R;
 import com.example.utshelps.api.ApiManager;
 import com.example.utshelps.fragment.FragmentTwo;
 import com.example.utshelps.fragment.MainFragment;
-import com.example.utshelps.fragment.WorkshopsListFragment;
+import com.example.utshelps.fragment.WorkshopListFragment;
 import com.example.utshelps.model.Workshop;
 import com.example.utshelps.model.WorkshopResponse;
 
@@ -30,6 +30,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * The activity that is loaded on app launch.
+ */
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
@@ -68,10 +71,13 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = new Intent(this, LoginActivity.class);
         //startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
 
-        //getWorkshops();
+        //getWorkshopList();
     }
 
-    private void getWorkshops() {
+    /**
+     * Makes a network call using the ApiManager and handles the response.
+     */
+    private void getWorkshopList() {
         Callback<WorkshopResponse> callback = new Callback<WorkshopResponse>() {
             @Override
             public void onResponse(Call<WorkshopResponse> call, Response<WorkshopResponse> response) {
@@ -95,16 +101,28 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        mApiManager.getWorkshops(callback);
+        mApiManager.getWorkshopList(callback);
     }
 
+    /**
+     * Displays the first fragment on app launch
+     */
     private void displayFirstFragment() {
-        Fragment fragment = new WorkshopsListFragment();
+        Fragment fragment = new WorkshopListFragment();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.drawer_content, fragment);
         fragmentTransaction.commit();
     }
 
+    /**
+     * Handles the results of an activity which was started by MainActivity.
+     * <p/>
+     * Currently it is being used to check whether a user was signed in successfully or not.
+     *
+     * @param requestCode used to identify the activity and why it was requested
+     * @param resultCode  used to identify the result
+     * @param data        data passed back from the activity that was started
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //super.onActivityResult(requestCode, resultCode, data);
@@ -132,6 +150,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Handles item selections made by the user.
+     * <p/>
+     * Checks which item was selected and responds to that selection.
+     *
+     * @param menuItem
+     */
     private void selectNavigationItem(MenuItem menuItem) {
         menuItem.setChecked(true);
 
@@ -154,6 +179,14 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.closeDrawers();
     }
 
+    /**
+     * Displays a given fragment
+     * <p/>
+     * This function also pops the back stack to ensure there is ever only 2 selections from the nav
+     * drawer.
+     *
+     * @param fragment
+     */
     private void displayFragment(Fragment fragment) {
         if (fragment == null) return;
 

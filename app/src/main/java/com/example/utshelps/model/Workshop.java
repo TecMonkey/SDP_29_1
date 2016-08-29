@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 /**
+ * Model that represents a Workshop.
+ *
  * Created by Yaseen on 29/08/2016.
  */
 public class Workshop {
@@ -12,8 +14,6 @@ public class Workshop {
     private int mId;
     @SerializedName("name")
     private String mName;
-
-    // TODO: Fix date serialisation
     @SerializedName("archived")
     private Date mDateArchived;
 

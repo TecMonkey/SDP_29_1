@@ -1,6 +1,8 @@
 package com.example.utshelps;
 
 /**
+ * Contains a list of constants that is used by various parts of the application.
+ * <p/>
  * Created by Yaseen on 23/08/2016.
  */
 public class Constants {

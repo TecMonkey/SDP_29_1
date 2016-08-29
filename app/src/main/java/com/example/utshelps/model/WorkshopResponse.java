@@ -5,6 +5,10 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
+ * Wrapper class around a list of Workshop elements.
+ * <p/>
+ * Used by Retrofit/Gson to map a response to a class.
+ * <p/>
  * Created by Yaseen on 29/08/2016.
  */
 public class WorkshopResponse {

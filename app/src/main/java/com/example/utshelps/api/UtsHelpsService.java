@@ -10,11 +10,13 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
 /**
+ * Interface that is used by Retrofit to make network calls.
+ *
  * Created by Yaseen on 29/08/2016.
  */
 public interface UtsHelpsService {
     @Headers("AppKey: sdpgroup29")
 
     @GET("workshop/workshopSets/")
-    Call<WorkshopResponse> getWorkshops();
+    Call<WorkshopResponse> getWorkshopList();
 }

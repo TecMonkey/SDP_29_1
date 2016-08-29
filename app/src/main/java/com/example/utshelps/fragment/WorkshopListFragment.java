@@ -24,14 +24,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
+ * Fragment that fetches and displays a list of Workshops from the api.
+ * <p/>
  * Created by Yaseen on 29/08/2016.
  */
-public class WorkshopsListFragment extends Fragment {
+public class WorkshopListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private WorkshopListAdapter mWorkshopListAdapter;
     private ApiManager mApiManager;
 
-    public WorkshopsListFragment() {
+    public WorkshopListFragment() {
 
     }
 
@@ -46,13 +48,13 @@ public class WorkshopsListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View createdView = inflater.inflate(R.layout.fragment_workshops_list, container, false);
+        View createdView = inflater.inflate(R.layout.fragment_workshop_list, container, false);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(createdView.getContext());
         mRecyclerView = (RecyclerView) createdView.findViewById(R.id.fragment_workshops_list_recycler_view);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        getWorkshopsList();
+        getWorkshopList();
 
         return createdView;
     }
@@ -63,7 +65,10 @@ public class WorkshopsListFragment extends Fragment {
         mApiManager = ApiManager.getInstance();
     }
 
-    private void getWorkshopsList() {
+    /**
+     * Fetches the workshops from the api and creates a callback method to handle the response.
+     */
+    private void getWorkshopList() {
         Callback<WorkshopResponse> callback = new Callback<WorkshopResponse>() {
             @Override
             public void onResponse(Call<WorkshopResponse> call, Response<WorkshopResponse> response) {
@@ -71,11 +76,7 @@ public class WorkshopsListFragment extends Fragment {
                     Log.d(MainActivity.TAG, "response was successful");
                     if (response.body().isSuccess()) {
                         ArrayList<Workshop> workshopList = new ArrayList<>(response.body().getWorkshopList());
-                        if (workshopList.size() > 0) {
-                            Workshop w1 = workshopList.get(0);
-                            Log.d(MainActivity.TAG, "w1 id: " + w1.getId());
-                        }
-                        displayWorkshopsList(workshopList);
+                        displayWorkshopList(workshopList);
                     }
                 } else {
                     Log.d(MainActivity.TAG, "no response from server");
@@ -88,15 +89,22 @@ public class WorkshopsListFragment extends Fragment {
             }
         };
 
-        mApiManager.getWorkshops(callback);
+        mApiManager.getWorkshopList(callback);
     }
 
-    private void displayWorkshopsList(ArrayList<Workshop> workshopList) {
+    /**
+     * Displays the list of workshops.
+     * <p/>
+     * Creates an adapter if it does not exist or updates the adapter with the new list.
+     *
+     * @param workshopList
+     */
+    private void displayWorkshopList(ArrayList<Workshop> workshopList) {
         if (mWorkshopListAdapter == null) {
             mWorkshopListAdapter = new WorkshopListAdapter(workshopList);
+            mRecyclerView.setAdapter(mWorkshopListAdapter);
+        } else {
+            mWorkshopListAdapter.setWorkshopList(workshopList);
         }
-
-        mRecyclerView.setAdapter(mWorkshopListAdapter);
-        mWorkshopListAdapter.notifyDataSetChanged();
     }
 }

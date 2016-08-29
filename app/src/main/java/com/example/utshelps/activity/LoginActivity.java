@@ -11,6 +11,9 @@ import com.example.utshelps.R;
 
 import java.util.regex.Pattern;
 
+/**
+ * Activity that a student will use to log in to the HELPS system.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText mStudentIdEditText;
@@ -33,6 +36,12 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordEditText = (EditText) findViewById(R.id.activity_login_student_password_edit_text);
     }
 
+    /**
+     * Attempts to sign the user in. If there is an input error, an error message is displayed.
+     * <p/>
+     * TODO: Actually sign a student in
+     * Doesn't actually sign a student in at the moment, but it will.
+     */
     public void attemptSignIn() {
         boolean error = false;
 
@@ -60,11 +69,26 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks whether an inputted student id is valid.
+     *
+     * @param studentId
+     * @return
+     */
     private boolean isStudentIdValid(String studentId) {
         Pattern studentIdPattern = Pattern.compile("^[0-9]{8}$");
         return isPatternValid(studentIdPattern, studentId);
     }
 
+    /**
+     * Compares a string to a specified regex pattern
+     * <p/>
+     * This is just a utility function that wraps around the Matcher regex class.
+     *
+     * @param regexPattern the pattern to compare against
+     * @param text         the text to compare
+     * @return
+     */
     private boolean isPatternValid(Pattern regexPattern, String text) {
         return regexPattern.matcher(text).matches();
     }

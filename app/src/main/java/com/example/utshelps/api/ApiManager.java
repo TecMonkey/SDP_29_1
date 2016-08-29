@@ -12,6 +12,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
+ * Singleton class that wraps around the UtsHelpService and manages all network requests.
+ * <p/>
+ * This class can be used by any part of the application to make calls to the api.
+ * <p/>
  * Created by Yaseen on 29/08/2016.
  */
 public class ApiManager {
@@ -29,6 +33,7 @@ public class ApiManager {
     }
 
     private ApiManager() {
+        // The interceptor is used to view the requests and responses sent over the wire.
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -36,6 +41,7 @@ public class ApiManager {
                 .addInterceptor(interceptor)
                 .build();
 
+        // Have to create our own custom gson so that we can successfully parse the date.
         Gson gson = new GsonBuilder().setDateFormat(DATE_FORMAT).create();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -47,8 +53,13 @@ public class ApiManager {
         mService = retrofit.create(UtsHelpsService.class);
     }
 
-    public void getWorkshops(Callback callback) {
-        Call<WorkshopResponse> workshopsCall = mService.getWorkshops();
+    /**
+     * Makes a call to the server to retrieve a list of workshops.
+     *
+     * @param callback
+     */
+    public void getWorkshopList(Callback callback) {
+        Call<WorkshopResponse> workshopsCall = mService.getWorkshopList();
         workshopsCall.enqueue(callback);
     }
 }

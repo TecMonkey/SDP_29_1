@@ -14,13 +14,15 @@ import com.example.utshelps.model.Workshop;
 import java.util.ArrayList;
 
 /**
+ * Adapter that is used to display a Workshop item in the WorkshopListFragment.
+ * <p/>
  * Created by Yaseen on 29/08/2016.
  */
 public class WorkshopListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<Workshop> mWorkshopsList;
+    private ArrayList<Workshop> mWorkshopList;
 
-    public WorkshopListAdapter(ArrayList<Workshop> workshopsList) {
-        mWorkshopsList = workshopsList;
+    public WorkshopListAdapter(ArrayList<Workshop> workshopList) {
+        mWorkshopList = workshopList;
     }
 
     @Override
@@ -34,9 +36,9 @@ public class WorkshopListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         WorkshopViewHolder workshopViewHolder = (WorkshopViewHolder) holder;
-        Workshop workshop = mWorkshopsList.get(position);
+        Workshop workshop = mWorkshopList.get(position);
 
-        Log.d(MainActivity.TAG, "position is: " + position + " of " + mWorkshopsList.size());
+        Log.d(MainActivity.TAG, "position is: " + position + " of " + mWorkshopList.size());
 
         workshopViewHolder.workshopIdTextView.setText(Integer.toString(workshop.getId()));
         workshopViewHolder.workshopNameTextView.setText(workshop.getName());
@@ -44,13 +46,21 @@ public class WorkshopListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        if (mWorkshopsList != null) return mWorkshopsList.size();
+        if (mWorkshopList != null) return mWorkshopList.size();
 
         return 0;
     }
 
-    private class WorkshopViewHolder extends RecyclerView.ViewHolder {
+    public void setWorkshopList(ArrayList<Workshop> workshopList) {
+        this.mWorkshopList = workshopList;
+        this.notifyDataSetChanged();
+    }
 
+    /**
+     * A ViewHolder which contains the layouts and views used to display each Workshop element.
+     */
+    private class WorkshopViewHolder extends RecyclerView.ViewHolder {
+        // Because this is a private inner class, I saw no need to set these variables to private.
         public TextView workshopIdTextView;
         public TextView workshopNameTextView;
 
