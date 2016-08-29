@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.utshelps.model.Workshop;
 import com.example.utshelps.model.WorkshopResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -73,8 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 .addInterceptor(interceptor)
                 .build();
 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
+
         Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl("http://utshelps9213.cloudapp.net/api/")
                 .client(client)
                 .build();

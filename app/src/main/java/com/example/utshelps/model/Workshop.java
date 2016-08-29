@@ -15,7 +15,7 @@ public class Workshop {
 
     // TODO: Fix date serialisation
     @SerializedName("archived")
-    private String mDateArchived;
+    private Date mDateArchived;
 
     public int getId() {
         return mId;
@@ -33,11 +33,11 @@ public class Workshop {
         this.mName = mName;
     }
 
-    public String getDateArchived() {
+    public Date getDateArchived() {
         return mDateArchived;
     }
 
-    public void setDateArchived(String mDateArchived) {
+    public void setDateArchived(Date mDateArchived) {
         this.mDateArchived = mDateArchived;
     }
 }
