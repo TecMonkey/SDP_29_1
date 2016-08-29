@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
     private FragmentManager mFragmentManager;
+    private ApiManager mApiManager;
 
     public static final String TAG = "UTS";
 
@@ -65,26 +66,15 @@ public class MainActivity extends AppCompatActivity {
 
         displayFirstFragment();
 
+        mApiManager = ApiManager.getInstance();
+
         //Intent intent = new Intent(this, LoginActivity.class);
         //startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        getWorkshops();
+    }
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
-
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("http://utshelps9213.cloudapp.net/api/")
-                .client(client)
-                .build();
-
-        UtsHelpsService utsHelpsService = retrofit.create(UtsHelpsService.class);
-
+    private void getWorkshops() {
         Callback<WorkshopResponse> callback = new Callback<WorkshopResponse>() {
             @Override
             public void onResponse(Call<WorkshopResponse> call, Response<WorkshopResponse> response) {
@@ -108,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        Call<WorkshopResponse> call = utsHelpsService.getWorkshops();
-        call.enqueue(callback);
+        mApiManager.getWorkshops(callback);
     }
 
     private void displayFirstFragment() {
