@@ -1,4 +1,4 @@
-package com.example.utshelps;
+package com.example.utshelps.activity;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -15,23 +15,19 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.utshelps.Constants;
+import com.example.utshelps.R;
+import com.example.utshelps.api.ApiManager;
+import com.example.utshelps.fragment.FragmentTwo;
+import com.example.utshelps.fragment.MainFragment;
 import com.example.utshelps.model.Workshop;
 import com.example.utshelps.model.WorkshopResponse;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;

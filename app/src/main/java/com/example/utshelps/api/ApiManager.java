@@ -1,6 +1,4 @@
-package com.example.utshelps;
-
-import android.content.Context;
+package com.example.utshelps.api;
 
 import com.example.utshelps.model.WorkshopResponse;
 import com.google.gson.Gson;

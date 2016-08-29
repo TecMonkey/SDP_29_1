@@ -1,4 +1,4 @@
-package com.example.utshelps;
+package com.example.utshelps.api;
 
 import com.example.utshelps.model.Workshop;
 import com.example.utshelps.model.WorkshopResponse;
