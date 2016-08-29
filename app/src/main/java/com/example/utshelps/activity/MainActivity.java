@@ -20,6 +20,7 @@ import com.example.utshelps.R;
 import com.example.utshelps.api.ApiManager;
 import com.example.utshelps.fragment.FragmentTwo;
 import com.example.utshelps.fragment.MainFragment;
+import com.example.utshelps.fragment.WorkshopsListFragment;
 import com.example.utshelps.model.Workshop;
 import com.example.utshelps.model.WorkshopResponse;
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = new Intent(this, LoginActivity.class);
         //startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
 
-        getWorkshops();
+        //getWorkshops();
     }
 
     private void getWorkshops() {
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayFirstFragment() {
-        Fragment fragment = new MainFragment();
+        Fragment fragment = new WorkshopsListFragment();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.drawer_content, fragment);
         fragmentTransaction.commit();
