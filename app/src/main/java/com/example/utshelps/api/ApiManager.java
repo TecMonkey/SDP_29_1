@@ -22,8 +22,8 @@ public class ApiManager {
     private static ApiManager mApiManager;
     private UtsHelpsService mService;
 
-    private static final String BASE_URL = "http://utshelps9213.cloudapp.net/api/";
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+    private static final String BASE_URL = "http://198.199.95.32:9001/";
+    private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
 
     public static ApiManager getInstance() {
         if (mApiManager == null) {
