@@ -20,9 +20,9 @@ import com.example.utshelps.R;
 import com.example.utshelps.api.ApiManager;
 import com.example.utshelps.fragment.FragmentTwo;
 import com.example.utshelps.fragment.MainFragment;
-import com.example.utshelps.fragment.WorkshopListFragment;
-import com.example.utshelps.model.Workshop;
-import com.example.utshelps.model.WorkshopResponse;
+import com.example.utshelps.fragment.WorkshopSetListFragment;
+import com.example.utshelps.model.WorkshopSet;
+import com.example.utshelps.model.WorkshopSetResponse;
 
 import java.util.ArrayList;
 
@@ -78,15 +78,15 @@ public class MainActivity extends AppCompatActivity {
      * Makes a network call using the ApiManager and handles the response.
      */
     private void getWorkshopList() {
-        Callback<WorkshopResponse> callback = new Callback<WorkshopResponse>() {
+        Callback<WorkshopSetResponse> callback = new Callback<WorkshopSetResponse>() {
             @Override
-            public void onResponse(Call<WorkshopResponse> call, Response<WorkshopResponse> response) {
+            public void onResponse(Call<WorkshopSetResponse> call, Response<WorkshopSetResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "response was successful");
                     if (response.body().isSuccess()) {
-                        ArrayList<Workshop> workshops = new ArrayList<>(response.body().getWorkshopList());
-                        if (workshops.size() > 0) {
-                            Workshop w1 = workshops.get(0);
+                        ArrayList<WorkshopSet> workshopSetArrayList = new ArrayList<>(response.body().getWorkshopList());
+                        if (workshopSetArrayList.size() > 0) {
+                            WorkshopSet w1 = workshopSetArrayList.get(0);
                             Log.d(TAG, "w1 id: " + w1.getId());
                         }
                     }
@@ -96,19 +96,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<WorkshopResponse> call, Throwable t) {
+            public void onFailure(Call<WorkshopSetResponse> call, Throwable t) {
                 Log.d(TAG, "no internet connectivity");
             }
         };
 
-        mApiManager.getWorkshopList(callback);
+        mApiManager.getWorkshopSetList(callback);
     }
 
     /**
      * Displays the first fragment on app launch
      */
     private void displayFirstFragment() {
-        Fragment fragment = new WorkshopListFragment();
+        Fragment fragment = new WorkshopSetListFragment();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.drawer_content, fragment);
         fragmentTransaction.commit();

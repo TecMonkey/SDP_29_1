@@ -1,6 +1,6 @@
 package com.example.utshelps.api;
 
-import com.example.utshelps.model.WorkshopResponse;
+import com.example.utshelps.model.WorkshopSetResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -58,8 +58,8 @@ public class ApiManager {
      *
      * @param callback
      */
-    public void getWorkshopList(Callback callback) {
-        Call<WorkshopResponse> workshopsCall = mService.getWorkshopList();
+    public void getWorkshopSetList(Callback callback) {
+        Call<WorkshopSetResponse> workshopsCall = mService.getWorkshopSetList();
         workshopsCall.enqueue(callback);
     }
 }

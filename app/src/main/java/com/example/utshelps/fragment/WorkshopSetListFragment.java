@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 
 import com.example.utshelps.R;
 import com.example.utshelps.activity.MainActivity;
-import com.example.utshelps.adapter.WorkshopListAdapter;
+import com.example.utshelps.adapter.WorkshopSetListAdapter;
 import com.example.utshelps.api.ApiManager;
-import com.example.utshelps.model.Workshop;
-import com.example.utshelps.model.WorkshopResponse;
+import com.example.utshelps.model.WorkshopSet;
+import com.example.utshelps.model.WorkshopSetResponse;
 
 import java.util.ArrayList;
 
@@ -28,12 +28,12 @@ import retrofit2.Response;
  * <p/>
  * Created by Yaseen on 29/08/2016.
  */
-public class WorkshopListFragment extends Fragment {
+public class WorkshopSetListFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private WorkshopListAdapter mWorkshopListAdapter;
+    private WorkshopSetListAdapter mWorkshopSetListAdapter;
     private ApiManager mApiManager;
 
-    public WorkshopListFragment() {
+    public WorkshopSetListFragment() {
 
     }
 
@@ -48,13 +48,13 @@ public class WorkshopListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View createdView = inflater.inflate(R.layout.fragment_workshop_list, container, false);
+        View createdView = inflater.inflate(R.layout.fragment_workshop_set_list, container, false);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(createdView.getContext());
-        mRecyclerView = (RecyclerView) createdView.findViewById(R.id.fragment_workshops_list_recycler_view);
+        mRecyclerView = (RecyclerView) createdView.findViewById(R.id.fragment_workshops_set_list_recycler_view);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        getWorkshopList();
+        getWorkshopSetList();
 
         return createdView;
     }
@@ -68,15 +68,15 @@ public class WorkshopListFragment extends Fragment {
     /**
      * Fetches the workshops from the api and creates a callback method to handle the response.
      */
-    private void getWorkshopList() {
-        Callback<WorkshopResponse> callback = new Callback<WorkshopResponse>() {
+    private void getWorkshopSetList() {
+        Callback<WorkshopSetResponse> callback = new Callback<WorkshopSetResponse>() {
             @Override
-            public void onResponse(Call<WorkshopResponse> call, Response<WorkshopResponse> response) {
+            public void onResponse(Call<WorkshopSetResponse> call, Response<WorkshopSetResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(MainActivity.TAG, "response was successful");
                     if (response.body().isSuccess()) {
-                        ArrayList<Workshop> workshopList = new ArrayList<>(response.body().getWorkshopList());
-                        displayWorkshopList(workshopList);
+                        ArrayList<WorkshopSet> workshopSetArrayList = new ArrayList<>(response.body().getWorkshopList());
+                        displayWorkshopSetList(workshopSetArrayList);
                     }
                 } else {
                     Log.d(MainActivity.TAG, "no response from server");
@@ -84,12 +84,12 @@ public class WorkshopListFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<WorkshopResponse> call, Throwable t) {
+            public void onFailure(Call<WorkshopSetResponse> call, Throwable t) {
                 Log.d(MainActivity.TAG, "no internet connectivity");
             }
         };
 
-        mApiManager.getWorkshopList(callback);
+        mApiManager.getWorkshopSetList(callback);
     }
 
     /**
@@ -97,14 +97,14 @@ public class WorkshopListFragment extends Fragment {
      * <p/>
      * Creates an adapter if it does not exist or updates the adapter with the new list.
      *
-     * @param workshopList
+     * @param workshopSetArrayList
      */
-    private void displayWorkshopList(ArrayList<Workshop> workshopList) {
-        if (mWorkshopListAdapter == null) {
-            mWorkshopListAdapter = new WorkshopListAdapter(workshopList);
-            mRecyclerView.setAdapter(mWorkshopListAdapter);
+    private void displayWorkshopSetList(ArrayList<WorkshopSet> workshopSetArrayList) {
+        if (mWorkshopSetListAdapter == null) {
+            mWorkshopSetListAdapter = new WorkshopSetListAdapter(workshopSetArrayList);
+            mRecyclerView.setAdapter(mWorkshopSetListAdapter);
         } else {
-            mWorkshopListAdapter.setWorkshopList(workshopList);
+            mWorkshopSetListAdapter.setWorkshopArrayList(workshopSetArrayList);
         }
     }
 }

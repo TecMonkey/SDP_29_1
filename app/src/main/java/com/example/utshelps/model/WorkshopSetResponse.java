@@ -2,30 +2,31 @@ package com.example.utshelps.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Wrapper class around a list of Workshop elements.
+ * Wrapper class around a list of WorkshopSet elements.
  * <p/>
  * Used by Retrofit/Gson to map a response to a class.
  * <p/>
  * Created by Yaseen on 29/08/2016.
  */
-public class WorkshopResponse {
+public class WorkshopSetResponse {
 
     @SerializedName("Results")
-    private List<Workshop> mWorkshopList;
+    private ArrayList<WorkshopSet> mWorkshopSetList;
     @SerializedName("IsSuccess")
     private boolean mSuccess;
     @SerializedName("DisplayMessage")
     private String mDisplayMessage;
 
-    public List<Workshop> getWorkshopList() {
-        return mWorkshopList;
+    public ArrayList<WorkshopSet> getWorkshopList() {
+        return mWorkshopSetList;
     }
 
-    public void setWorkshopList(List<Workshop> mWorkshopList) {
-        this.mWorkshopList = mWorkshopList;
+    public void setWorkshopList(ArrayList<WorkshopSet> mWorkshopSetList) {
+        this.mWorkshopSetList = mWorkshopSetList;
     }
 
     public boolean isSuccess() {

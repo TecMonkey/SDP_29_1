@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 /**
- * Model that represents a Workshop.
+ * Model that represents a WorkshopSet.
  *
  * Created by Yaseen on 29/08/2016.
  */
-public class Workshop {
-    @SerializedName("id")
+public class WorkshopSet {
+    @SerializedName("WorkshopSetId")
     private int mId;
-    @SerializedName("name")
+    @SerializedName("Name")
     private String mName;
-    @SerializedName("archived")
+    @SerializedName("ArchivedDate")
     private Date mDateArchived;
 
     public int getId() {
