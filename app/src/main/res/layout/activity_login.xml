@@ -68,8 +68,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sign_in" />
 
-            
+            <Button
+                android:id="@+id/activity_register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/register" >
+
+            </Button>
         </LinearLayout>
+
     </ScrollView>
 
 
