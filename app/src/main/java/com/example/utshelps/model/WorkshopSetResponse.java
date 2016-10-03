@@ -1,5 +1,6 @@
 package com.example.utshelps.model;
 
+import com.example.utshelps.util.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -14,11 +15,11 @@ import java.util.List;
  */
 public class WorkshopSetResponse {
 
-    @SerializedName("Results")
+    @SerializedName(JsonKeys.RESULTS)
     private ArrayList<WorkshopSet> mWorkshopSetList;
-    @SerializedName("IsSuccess")
+    @SerializedName(JsonKeys.IS_SUCCESS)
     private boolean mSuccess;
-    @SerializedName("DisplayMessage")
+    @SerializedName(JsonKeys.DISPLAY_MESSAGE)
     private String mDisplayMessage;
 
     public ArrayList<WorkshopSet> getWorkshopList() {
