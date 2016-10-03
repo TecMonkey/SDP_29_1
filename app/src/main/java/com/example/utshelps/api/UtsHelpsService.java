@@ -1,6 +1,6 @@
 package com.example.utshelps.api;
 
-import com.example.utshelps.model.WorkshopSetResponse;
+import com.example.utshelps.api.model.WorkshopSetResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

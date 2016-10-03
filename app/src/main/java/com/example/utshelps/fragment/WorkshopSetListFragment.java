@@ -15,7 +15,7 @@ import com.example.utshelps.activity.MainActivity;
 import com.example.utshelps.adapter.WorkshopSetListAdapter;
 import com.example.utshelps.api.ApiManager;
 import com.example.utshelps.model.WorkshopSet;
-import com.example.utshelps.model.WorkshopSetResponse;
+import com.example.utshelps.api.model.WorkshopSetResponse;
 
 import java.util.ArrayList;
 
@@ -74,8 +74,8 @@ public class WorkshopSetListFragment extends Fragment {
             public void onResponse(Call<WorkshopSetResponse> call, Response<WorkshopSetResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(MainActivity.TAG, "response was successful");
-                    if (response.body().isSuccess()) {
-                        ArrayList<WorkshopSet> workshopSetArrayList = new ArrayList<>(response.body().getWorkshopList());
+                    if (response.body().isSuccessful()) {
+                        ArrayList<WorkshopSet> workshopSetArrayList = new ArrayList<>(response.body().getWorkshopSetArrayList());
                         displayWorkshopSetList(workshopSetArrayList);
                     }
                 } else {

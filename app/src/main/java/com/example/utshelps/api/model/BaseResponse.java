@@ -1,4 +1,4 @@
-package com.example.utshelps.model;
+package com.example.utshelps.api.model;
 
 import com.example.utshelps.util.JsonKeys;
 import com.google.gson.annotations.SerializedName;

@@ -1,6 +1,6 @@
 package com.example.utshelps.api;
 
-import com.example.utshelps.model.WorkshopSetResponse;
+import com.example.utshelps.api.model.WorkshopSetResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
