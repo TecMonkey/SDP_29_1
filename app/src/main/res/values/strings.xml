@@ -31,6 +31,7 @@
     <string name="year_required">Year*</string>
     <string name="first_language_required">First Language*</string>
     <string name="country_of_origin_required">Country of Origin*</string>
+    <string name="register_all_caps">REGISTER</string>
 
     <string-array name="years">
         <item>1st Year</item>
