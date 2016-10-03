@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+        <!--When search icon is pressed, the action bar will collapse to a search bar-->
         <item android:id="@+id/session_searchable"
             android:title="@string/session_search"
             android:icon="@drawable/ic_action_search"
