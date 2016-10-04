@@ -2,7 +2,9 @@ package com.example.utshelps.api;
 
 import com.example.utshelps.api.model.BaseResponse;
 import com.example.utshelps.api.model.LoginRequest;
+import com.example.utshelps.api.model.StudentResponse;
 import com.example.utshelps.api.model.WorkshopSetResponse;
+import com.example.utshelps.model.Student;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -72,5 +74,10 @@ public class ApiManager {
     public void login(Callback callback, LoginRequest loginRequest) {
         Call<BaseResponse> loginCall = mService.login(loginRequest);
         loginCall.enqueue(callback);
+    }
+
+    public void register(Callback callback, Student student) {
+        Call<StudentResponse> registerCall = mService.register(student);
+        registerCall.enqueue(callback);
     }
 }
