@@ -47,6 +47,13 @@ public class Student {
     @SerializedName(JsonKeys.FOUNDATION_COURSE)         private boolean mFoundationCourse;
     @SerializedName(JsonKeys.FOUNDATION_COURSE_MARK)    private Integer mFoundationCourseMark;
 
+    public static final String GENDER_MALE = "M";
+    public static final String GENDER_FEMALE = "F";
+    public static final String GENDER_X = "X";
+
+    public static final String DEGREE_UNDERGRAD = "U";
+    public static final String DEGREE_POSTGRAD = "P";
+
     public String getStudentId() {
         return mStudentId;
     }

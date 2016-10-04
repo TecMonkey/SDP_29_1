@@ -3,6 +3,7 @@ package com.example.utshelps.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.example.utshelps.R;
+import com.example.utshelps.activity.MainActivity;
+import com.example.utshelps.model.Student;
+
+import java.util.regex.Pattern;
 
 /**
  * Created by yaseen on 3/10/16.
@@ -47,17 +52,106 @@ public class RegisterFragment extends Fragment {
         mCountrySpinner = (Spinner) createdView.findViewById(R.id.fragment_register_country_spinner);
         mRegisterButton = (Button) createdView.findViewById(R.id.fragment_register_register_button);
 
+        // TODO: Set language to default to English
+        // TODO: Set country to default to Australia
+
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onRegister();
+                attemptRegister();
             }
         });
 
         return createdView;
     }
 
-    private void onRegister() {
+    private void attemptRegister() {
+        boolean error = false;
 
+        String preferredName = getPreferredName();
+        String contactNumber = mContactNumberEditText.getText().toString();
+        String gender = getGender();
+        String degreeType = getDegree();
+        int degreeYear = mYearSpinner.getSelectedItemPosition() + 1;
+        String language = mLanguageSpinner.getSelectedItem().toString();
+        String country = mCountrySpinner.getSelectedItem().toString();
+
+        if (!isContactNumberValid(contactNumber)) {
+            mContactNumberEditText.setError(getString(R.string.error_phone_number_invalid));
+            mContactNumberEditText.requestFocus();
+            error = true;
+        }
+
+        if (preferredName != null && !isPreferredNameValid(preferredName)) {
+            mPreferredNameEditText.setError(getString(R.string.error_preferred_name_invalid));
+            mPreferredNameEditText.requestFocus();
+            error = true;
+        }
+
+        if (!error) {
+            Student student = new Student();
+            student.setPreferredName(preferredName);
+            student.setContactNumber(contactNumber);
+            student.setGender(gender);
+            student.setDegreeType(degreeType);
+            student.setDegreeYears(degreeYear);
+            student.setFirstLanguage(language);
+            student.setCountryOfOrigin(country);
+
+            registerStudent(student);
+        }
     }
+
+    private String getPreferredName() {
+        String text = mPreferredNameEditText.getText().toString();
+        if (text.length() == 0) {
+            return null;
+        }
+        return text;
+    }
+
+    private String getGender() {
+        switch(mGenderRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.fragment_register_gender_male_radio_button:
+                return Student.GENDER_MALE;
+            case R.id.fragment_register_gender_female_radio_button:
+                return Student.GENDER_FEMALE;
+            case R.id.fragment_register_gender_x_radio_button:
+                return Student.GENDER_X;
+            default:
+                return null;
+        }
+    }
+
+    private String getDegree() {
+        switch(mDegreeRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.fragment_register_degree_undergraduate_radio_button:
+                return Student.DEGREE_UNDERGRAD;
+            case R.id.fragment_register_degree_postgraduate_radio_button:
+                return Student.DEGREE_POSTGRAD;
+            default:
+                return null;
+        }
+    }
+
+    private boolean isPreferredNameValid(String preferredName) {
+        Pattern preferredNamePattern = Pattern.compile("[A-Za-z]{1}[a-z]*");
+        return preferredNamePattern.matcher(preferredName).matches();
+    }
+
+    private boolean isContactNumberValid(String contactNumber) {
+        Pattern contactNumberPattern = Pattern.compile("[\\+]*[0-9]{8,11}");
+        return contactNumberPattern.matcher(contactNumber).matches();
+    }
+
+    private void registerStudent(Student student) {
+        Log.d(MainActivity.TAG, "Preferred name: " + student.getPreferredName());
+        Log.d(MainActivity.TAG, "Contact number: " + student.getContactNumber());
+        Log.d(MainActivity.TAG, "Gender: " + student.getGender());
+        Log.d(MainActivity.TAG, "Degree years: " + student.getDegreeYears());
+        Log.d(MainActivity.TAG, "Degree type: " + student.getDegreeType());
+        Log.d(MainActivity.TAG, "Language: " + student.getFirstLanguage());
+        Log.d(MainActivity.TAG, "Country: " + student.getCountryOfOrigin());
+    }
+
 }

@@ -24,7 +24,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="x">X</string>
-    <string name="gender">Gender</string>
+    <string name="gender_optional">Gender (optional)</string>
     <string name="degree_required">Degree*</string>
     <string name="postgraduate">Postgraduate</string>
     <string name="undergraduate">Undergraduate</string>
@@ -32,6 +32,9 @@
     <string name="first_language_required">First Language*</string>
     <string name="country_of_origin_required">Country of Origin*</string>
     <string name="register_all_caps">REGISTER</string>
+
+    <string name="error_preferred_name_invalid">Name can only contain letters</string>
+    <string name="error_phone_number_invalid">Please enter a valid contact number</string>
 
     <string-array name="years">
         <item>1st Year</item>

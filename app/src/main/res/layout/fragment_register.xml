@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:text="@string/gender" />
+                    android:text="@string/gender_optional" />
 
                 <RadioGroup
                     android:id="@+id/fragment_register_gender_radio_group"
@@ -109,6 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/form_vertical_margin"
                     android:layout_marginTop="@dimen/form_vertical_margin"
+                    android:checkedButton="@+id/fragment_register_degree_undergraduate_radio_button"
                     android:orientation="horizontal">
 
                     <RadioButton
