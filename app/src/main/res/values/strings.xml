@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">UTS Helps</string>
+    <string name="session_name">Sessions</string>
     <string name="first_fragment">First Fragment</string>
     <string name="second_fragment">Second Fragment</string>
 
@@ -32,6 +33,7 @@
     <string name="first_language_required">First Language*</string>
     <string name="country_of_origin_required">Country of Origin*</string>
     <string name="register_all_caps">REGISTER</string>
+
 
     <string name="error_preferred_name_invalid">Name can only contain letters</string>
     <string name="error_phone_number_invalid">Please enter a valid contact number</string>
@@ -432,4 +434,16 @@
         <item>Zanzibar</item>
         <item>Zimbawe</item>
     </string-array>
+=======
+    <!--String array for the types of sessions available-->
+    <string-array name="session_names">
+        <item>1: Writing at University Session</item>
+        <item>2: Analysing and Planning Assignments</item>
+        <item>3: Critical Thinking and Writing Session</item>
+        <item>4: Writing an Essay Session</item>
+        <item>5: Avoiding Plagiarism Session</item>
+        <item>6: Listening and Note-making Session</item>
+    </string-array>
+
+>>>>>>> 5d9ebd698bf4a006b9a06ea48c11b4305a501702
 </resources>
