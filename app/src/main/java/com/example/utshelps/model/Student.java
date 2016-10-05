@@ -54,6 +54,9 @@ public class Student {
     public static final String DEGREE_UNDERGRAD = "U";
     public static final String DEGREE_POSTGRAD = "P";
 
+    public static final String DEGREE_STATUS_PERM = "P";
+    public static final String DEGREE_STATUS_INTL = "I";
+
     public String getStudentId() {
         return mStudentId;
     }

@@ -14,9 +14,15 @@ import android.widget.Spinner;
 
 import com.example.utshelps.R;
 import com.example.utshelps.activity.MainActivity;
+import com.example.utshelps.api.ApiManager;
+import com.example.utshelps.api.model.StudentResponse;
 import com.example.utshelps.model.Student;
 
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by yaseen on 3/10/16.
@@ -33,9 +39,13 @@ public class RegisterFragment extends Fragment {
     private Spinner mCountrySpinner;
     private Button mRegisterButton;
 
+    private ApiManager mApiManager;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mApiManager = ApiManager.getInstance();
     }
 
     @Nullable
@@ -55,6 +65,7 @@ public class RegisterFragment extends Fragment {
         // TODO: Set language to default to English
         // TODO: Set country to default to Australia
 
+        // TODO: Add degree status!!!
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,6 +163,34 @@ public class RegisterFragment extends Fragment {
         Log.d(MainActivity.TAG, "Degree type: " + student.getDegreeType());
         Log.d(MainActivity.TAG, "Language: " + student.getFirstLanguage());
         Log.d(MainActivity.TAG, "Country: " + student.getCountryOfOrigin());
+
+        Student jane = new Student();
+
+        jane.setStudentId("12345678");
+        jane.setDegreeType(Student.DEGREE_UNDERGRAD);
+        jane.setDegreeYears(4);
+        jane.setDegreeStatus(Student.DEGREE_STATUS_INTL);
+        jane.setPreferredName("API Testtttt");
+        jane.setFirstLanguage("English");
+        jane.setCountryOfOrigin("France");
+
+        Callback<StudentResponse> registerCallback = new Callback<StudentResponse>() {
+            @Override
+            public void onResponse(Call<StudentResponse> call, Response<StudentResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d(MainActivity.TAG, "response is successful");
+                } else {
+                    Log.d(MainActivity.TAG, "response is insuccessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StudentResponse> call, Throwable t) {
+
+            }
+        };
+
+        mApiManager.register(registerCallback, jane);
     }
 
 }
