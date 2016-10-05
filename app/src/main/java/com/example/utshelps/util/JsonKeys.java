@@ -75,4 +75,14 @@ public class JsonKeys {
 
     // WorkshopSet Model Keys
     public static final String WORKSHOP_SET_ID = "WorkshopSetId";
+
+    // FaqSection Model Keys
+    public static final String FAQ_SECTION_ID = "FaqSectionId";
+    public static final String FAQ_SECTION_TITLE = "FaqSectionTitle";
+    public static final String FAQ_SECTION_FAQS = "FaqSectionFaqs";
+
+    // Faq Model Keys
+    public static final String FAQ_ID = "FaqId";
+    public static final String FAQ_QUESTION = "FaqQuestion";
+    public static final String FAQ_ANSWER = "FaqAnswer";
 }

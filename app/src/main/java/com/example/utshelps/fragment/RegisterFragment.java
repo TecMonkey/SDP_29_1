@@ -1,5 +1,6 @@
 package com.example.utshelps.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,9 +15,15 @@ import android.widget.Spinner;
 
 import com.example.utshelps.R;
 import com.example.utshelps.activity.MainActivity;
+import com.example.utshelps.api.ApiManager;
+import com.example.utshelps.api.model.StudentResponse;
 import com.example.utshelps.model.Student;
 
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by yaseen on 3/10/16.
@@ -28,14 +35,19 @@ public class RegisterFragment extends Fragment {
     private EditText mContactNumberEditText;
     private RadioGroup mGenderRadioGroup;
     private RadioGroup mDegreeRadioGroup;
+    private RadioGroup mDegreeStatusRadioGroup;
     private Spinner mYearSpinner;
     private Spinner mLanguageSpinner;
     private Spinner mCountrySpinner;
     private Button mRegisterButton;
 
+    private ApiManager mApiManager;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mApiManager = ApiManager.getInstance();
     }
 
     @Nullable
@@ -47,6 +59,7 @@ public class RegisterFragment extends Fragment {
         mContactNumberEditText = (EditText) createdView.findViewById(R.id.fragment_register_contact_number_edit_text);
         mGenderRadioGroup = (RadioGroup) createdView.findViewById(R.id.fragment_register_gender_radio_group);
         mDegreeRadioGroup = (RadioGroup) createdView.findViewById(R.id.fragment_register_degree_radio_group);
+        mDegreeStatusRadioGroup = (RadioGroup) createdView.findViewById(R.id.fragment_register_degree_status_radio_group);
         mYearSpinner = (Spinner) createdView.findViewById(R.id.fragment_register_year_spinner);
         mLanguageSpinner = (Spinner) createdView.findViewById(R.id.fragment_register_language_spinner);
         mCountrySpinner = (Spinner) createdView.findViewById(R.id.fragment_register_country_spinner);
@@ -72,6 +85,7 @@ public class RegisterFragment extends Fragment {
         String contactNumber = mContactNumberEditText.getText().toString();
         String gender = getGender();
         String degreeType = getDegree();
+        String degreeStatus = getDegreeStatus();
         int degreeYear = mYearSpinner.getSelectedItemPosition() + 1;
         String language = mLanguageSpinner.getSelectedItem().toString();
         String country = mCountrySpinner.getSelectedItem().toString();
@@ -94,6 +108,7 @@ public class RegisterFragment extends Fragment {
             student.setContactNumber(contactNumber);
             student.setGender(gender);
             student.setDegreeType(degreeType);
+            student.setDegreeStatus(degreeStatus);
             student.setDegreeYears(degreeYear);
             student.setFirstLanguage(language);
             student.setCountryOfOrigin(country);
@@ -134,6 +149,18 @@ public class RegisterFragment extends Fragment {
         }
     }
 
+    private String getDegreeStatus() {
+        switch (mDegreeStatusRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.fragment_register_degree_status_international_radio_button:
+                return Student.DEGREE_STATUS_INTL;
+            case R.id.fragment_register_degree_status_permanent_radio_button:
+            default:
+                // The permanent radio button is selected by default, but if somehow it isn't set we
+                // will set it to default to permanent.
+                return Student.DEGREE_STATUS_PERM;
+        }
+    }
+
     private boolean isPreferredNameValid(String preferredName) {
         Pattern preferredNamePattern = Pattern.compile("[A-Za-z]{1}[a-z]*");
         return preferredNamePattern.matcher(preferredName).matches();
@@ -149,9 +176,38 @@ public class RegisterFragment extends Fragment {
         Log.d(MainActivity.TAG, "Contact number: " + student.getContactNumber());
         Log.d(MainActivity.TAG, "Gender: " + student.getGender());
         Log.d(MainActivity.TAG, "Degree years: " + student.getDegreeYears());
+        Log.d(MainActivity.TAG, "Degree status: " + student.getDegreeStatus());
         Log.d(MainActivity.TAG, "Degree type: " + student.getDegreeType());
         Log.d(MainActivity.TAG, "Language: " + student.getFirstLanguage());
         Log.d(MainActivity.TAG, "Country: " + student.getCountryOfOrigin());
+
+        Student jane = new Student();
+
+        jane.setStudentId("12345678");
+        jane.setDegreeType(Student.DEGREE_UNDERGRAD);
+        jane.setDegreeYears(4);
+        jane.setDegreeStatus(Student.DEGREE_STATUS_INTL);
+        jane.setPreferredName("API Testtttt");
+        jane.setFirstLanguage("English");
+        jane.setCountryOfOrigin("France");
+
+        Callback<StudentResponse> registerCallback = new Callback<StudentResponse>() {
+            @Override
+            public void onResponse(Call<StudentResponse> call, Response<StudentResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d(MainActivity.TAG, "response is successful");
+                } else {
+                    Log.d(MainActivity.TAG, "response is insuccessful");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StudentResponse> call, Throwable t) {
+
+            }
+        };
+
+        mApiManager.register(registerCallback, jane);
     }
 
 }
