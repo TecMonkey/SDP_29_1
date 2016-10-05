@@ -1,5 +1,6 @@
 package com.example.utshelps.model;
 
+import com.example.utshelps.util.JsonKeys;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -10,11 +11,11 @@ import java.util.Date;
  * Created by Yaseen on 29/08/2016.
  */
 public class WorkshopSet {
-    @SerializedName("WorkshopSetId")
+    @SerializedName(JsonKeys.WORKSHOP_SET_ID)
     private int mId;
-    @SerializedName("Name")
+    @SerializedName(JsonKeys.NAME)
     private String mName;
-    @SerializedName("ArchivedDate")
+    @SerializedName(JsonKeys.ARCHIVED_DATE)
     private Date mDateArchived;
 
     public int getId() {

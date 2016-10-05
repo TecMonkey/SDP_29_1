@@ -22,7 +22,7 @@ import com.example.utshelps.fragment.FragmentTwo;
 import com.example.utshelps.fragment.MainFragment;
 import com.example.utshelps.fragment.WorkshopSetListFragment;
 import com.example.utshelps.model.WorkshopSet;
-import com.example.utshelps.model.WorkshopSetResponse;
+import com.example.utshelps.api.model.WorkshopSetResponse;
 
 import java.util.ArrayList;
 
@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<WorkshopSetResponse> call, Response<WorkshopSetResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "response was successful");
-                    if (response.body().isSuccess()) {
-                        ArrayList<WorkshopSet> workshopSetArrayList = new ArrayList<>(response.body().getWorkshopList());
+                    if (response.body().isSuccessful()) {
+                        ArrayList<WorkshopSet> workshopSetArrayList = new ArrayList<>(response.body().getWorkshopSetArrayList());
                         if (workshopSetArrayList.size() > 0) {
                             WorkshopSet w1 = workshopSetArrayList.get(0);
                             Log.d(TAG, "w1 id: " + w1.getId());
