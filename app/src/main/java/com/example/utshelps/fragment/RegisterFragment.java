@@ -1,5 +1,6 @@
 package com.example.utshelps.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -34,6 +35,7 @@ public class RegisterFragment extends Fragment {
     private EditText mContactNumberEditText;
     private RadioGroup mGenderRadioGroup;
     private RadioGroup mDegreeRadioGroup;
+    private RadioGroup mDegreeStatusRadioGroup;
     private Spinner mYearSpinner;
     private Spinner mLanguageSpinner;
     private Spinner mCountrySpinner;
@@ -57,6 +59,7 @@ public class RegisterFragment extends Fragment {
         mContactNumberEditText = (EditText) createdView.findViewById(R.id.fragment_register_contact_number_edit_text);
         mGenderRadioGroup = (RadioGroup) createdView.findViewById(R.id.fragment_register_gender_radio_group);
         mDegreeRadioGroup = (RadioGroup) createdView.findViewById(R.id.fragment_register_degree_radio_group);
+        mDegreeStatusRadioGroup = (RadioGroup) createdView.findViewById(R.id.fragment_register_degree_status_radio_group);
         mYearSpinner = (Spinner) createdView.findViewById(R.id.fragment_register_year_spinner);
         mLanguageSpinner = (Spinner) createdView.findViewById(R.id.fragment_register_language_spinner);
         mCountrySpinner = (Spinner) createdView.findViewById(R.id.fragment_register_country_spinner);
@@ -65,7 +68,6 @@ public class RegisterFragment extends Fragment {
         // TODO: Set language to default to English
         // TODO: Set country to default to Australia
 
-        // TODO: Add degree status!!!
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +85,7 @@ public class RegisterFragment extends Fragment {
         String contactNumber = mContactNumberEditText.getText().toString();
         String gender = getGender();
         String degreeType = getDegree();
+        String degreeStatus = getDegreeStatus();
         int degreeYear = mYearSpinner.getSelectedItemPosition() + 1;
         String language = mLanguageSpinner.getSelectedItem().toString();
         String country = mCountrySpinner.getSelectedItem().toString();
@@ -105,6 +108,7 @@ public class RegisterFragment extends Fragment {
             student.setContactNumber(contactNumber);
             student.setGender(gender);
             student.setDegreeType(degreeType);
+            student.setDegreeStatus(degreeStatus);
             student.setDegreeYears(degreeYear);
             student.setFirstLanguage(language);
             student.setCountryOfOrigin(country);
@@ -145,6 +149,18 @@ public class RegisterFragment extends Fragment {
         }
     }
 
+    private String getDegreeStatus() {
+        switch (mDegreeStatusRadioGroup.getCheckedRadioButtonId()) {
+            case R.id.fragment_register_degree_status_international_radio_button:
+                return Student.DEGREE_STATUS_INTL;
+            case R.id.fragment_register_degree_status_permanent_radio_button:
+            default:
+                // The permanent radio button is selected by default, but if somehow it isn't set we
+                // will set it to default to permanent.
+                return Student.DEGREE_STATUS_PERM;
+        }
+    }
+
     private boolean isPreferredNameValid(String preferredName) {
         Pattern preferredNamePattern = Pattern.compile("[A-Za-z]{1}[a-z]*");
         return preferredNamePattern.matcher(preferredName).matches();
@@ -160,6 +176,7 @@ public class RegisterFragment extends Fragment {
         Log.d(MainActivity.TAG, "Contact number: " + student.getContactNumber());
         Log.d(MainActivity.TAG, "Gender: " + student.getGender());
         Log.d(MainActivity.TAG, "Degree years: " + student.getDegreeYears());
+        Log.d(MainActivity.TAG, "Degree status: " + student.getDegreeStatus());
         Log.d(MainActivity.TAG, "Degree type: " + student.getDegreeType());
         Log.d(MainActivity.TAG, "Language: " + student.getFirstLanguage());
         Log.d(MainActivity.TAG, "Country: " + student.getCountryOfOrigin());
