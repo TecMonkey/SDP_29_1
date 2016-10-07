@@ -1,13 +1,13 @@
-package com.example.razerblade.myapplication;
+package com.example.utshelps.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class resultactivity extends AppCompatActivity {
+public class ResultActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resultactivity);
+        setContentView(R.layout.activity_ResultActivity);
     }
 }
