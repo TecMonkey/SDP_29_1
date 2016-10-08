@@ -3,6 +3,7 @@ package com.example.utshelps.api;
 import com.example.utshelps.api.model.BaseResponse;
 import com.example.utshelps.api.model.LoginRequest;
 import com.example.utshelps.api.model.StudentResponse;
+import com.example.utshelps.api.model.WorkshopDetailResponse;
 import com.example.utshelps.api.model.WorkshopSetResponse;
 import com.example.utshelps.model.Student;
 import com.google.gson.Gson;
@@ -66,6 +67,14 @@ public class ApiManager {
         workshopsCall.enqueue(callback);
     }
 
+    /**
+     * Calls server to retrieve workshop sessions.
+     * @param callback
+     */
+    public void getWorkshopDetailList(Callback callback) {
+        Call<WorkshopDetailResponse> workshopDetailCall = mService.getWorkshopDetailList();
+        workshopDetailCall.enqueue(callback);
+    }
     /**
      * Logs the user in to the system.
      *

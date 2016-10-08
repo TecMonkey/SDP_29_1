@@ -14,11 +14,11 @@ import java.util.ArrayList;
 
 public class WorkshopDetailResponse extends BaseResponse {
 
-    //JsonKeys.RESULTS are in ArrayList
+    //JsonKeys.RESULTS are in an ArrayList
     @SerializedName(JsonKeys.RESULTS)
-    private ArrayList <WorkshopDetail> mWorkshopDetails;
+    private ArrayList <WorkshopDetail> mResults;
 
     public ArrayList <WorkshopDetail> getWorkshopDetailArrayList()
-    { return mWorkshopDetails; }
+    { return mResults; }
 
 }
