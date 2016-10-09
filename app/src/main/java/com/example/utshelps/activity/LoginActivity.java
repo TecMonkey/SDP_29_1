@@ -1,15 +1,24 @@
 package com.example.utshelps.activity;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.utshelps.Constants;
 import com.example.utshelps.R;
+import com.example.utshelps.api.ApiManager;
+import com.example.utshelps.api.model.BaseResponse;
+import com.example.utshelps.api.model.LoginRequest;
 
 import java.util.regex.Pattern;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Activity that a student will use to log in to the HELPS system.
@@ -18,13 +27,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText mStudentIdEditText;
     private EditText mPasswordEditText;
+    private ApiManager mApiManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mApiManager = ApiManager.getInstance();
 
-        Button signInButton = (Button) findViewById(R.id.activity_login_sign_in_button);
+        mStudentIdEditText = (EditText) findViewById(R.id.activity_login_student_id_edit_text);
+        mPasswordEditText = (EditText) findViewById(R.id.activity_login_student_password_edit_text);
+
+       final Button signInButton = (Button) findViewById(R.id.activity_login_sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,8 +46,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mStudentIdEditText = (EditText) findViewById(R.id.activity_login_student_id_edit_text);
-        mPasswordEditText = (EditText) findViewById(R.id.activity_login_student_password_edit_text);
+        //consider that method to link next register page
+        final Button registerButton = (Button) findViewById(R.id.activity_register_button);
+        registerButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent registerIntent = new Intent(LoginActivity.this, RegisteActivity.class);
+                LoginActivity.this.startActivity(registerIntent);
+            }
+        });
     }
 
     /**
@@ -64,8 +85,14 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (!error) {
-            setResult(Constants.LOGIN_ACTIVITY_SUCCESS);
-            finish();
+
+            LoginRequest loginRequest = new LoginRequest();
+            loginRequest.setStudentId(studentId);
+            loginRequest.setPassword(password);
+
+            getLoginResponse(loginRequest);
+            //setResult(Constants.LOGIN_ACTIVITY_SUCCESS);
+            //finish();
         }
     }
 
@@ -91,5 +118,34 @@ public class LoginActivity extends AppCompatActivity {
      */
     private boolean isPatternValid(Pattern regexPattern, String text) {
         return regexPattern.matcher(text).matches();
+    }
+
+    private void getLoginResponse(final LoginRequest loginRequest)
+    {
+        Callback<BaseResponse> callback  = new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if(response.isSuccessful()){
+                    Log.d(MainActivity.TAG, "response was successful");
+                        Log.d(MainActivity.TAG, "Login successful");
+                        Intent mainIntent = new Intent(LoginActivity.this, RegisteActivity.class);
+                        LoginActivity.this.startActivity(mainIntent);
+                } else {
+                    Log.d(MainActivity.TAG, "Login failed");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("Student id or Password is wrong !")
+                            .setNegativeButton("Retry", null)
+                            .create()
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<BaseResponse> call, Throwable t) {
+                Log.d(MainActivity.TAG, "no internet connect");
+            }
+        };
+
+        mApiManager.login(callback, loginRequest);
     }
 }

@@ -437,7 +437,7 @@
         <item>Zanzibar</item>
         <item>Zimbawe</item>
     </string-array>
-=======
+    =======
     <!--String array for the types of sessions available-->
     <string-array name="session_names">
         <item>1: Writing at University Session</item>
@@ -448,5 +448,5 @@
         <item>6: Listening and Note-making Session</item>
     </string-array>
 
->>>>>>> 5d9ebd698bf4a006b9a06ea48c11b4305a501702
+    >>>>>>> 5d9ebd698bf4a006b9a06ea48c11b4305a501702
 </resources>

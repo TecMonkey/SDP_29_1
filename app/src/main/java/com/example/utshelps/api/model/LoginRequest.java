@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by yaseen on 4/10/16.
  */
 
-public class LoginRequest {
+public class LoginRequest extends BaseResponse{
     @SerializedName(JsonKeys.STUDENT_ID)
     private String mStudentId;
     @SerializedName(JsonKeys.PASSWORD)

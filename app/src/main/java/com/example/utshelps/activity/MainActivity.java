@@ -68,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
         mApiManager = ApiManager.getInstance();
 
-        //Intent intent = new Intent(this, LoginActivity.class);
-        //startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivityForResult(intent, Constants.LOGIN_ACTIVITY_REQUEST);
 
-        //getWorkshopList();
+        getWorkshopList();
     }
 
     /**
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<WorkshopSetResponse> call, Response<WorkshopSetResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.d(TAG, "response was successful");
+                    Log.d(TAG, "response is successful");
                     if (response.body().isSuccessful()) {
                         ArrayList<WorkshopSet> workshopSetArrayList = new ArrayList<>(response.body().getWorkshopSetArrayList());
                         if (workshopSetArrayList.size() > 0) {
